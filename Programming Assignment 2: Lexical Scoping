@@ -1,0 +1,55 @@
+## Put comments here that give an overall description of what your 
+2 ## functions do 
+3 ## Our aim in this experiment is to write a pair of functions, namely,  
+4 ## "makeCacheMatrix" and "cacheSolve" that cache the inverse of a matrix 
+5 
+ 
+6 ## Write a short comment describing this function 
+7 ## makeCacheMatrix is a function which creates a special "matrix" object that can  
+8 ## cache its inverse for the input (which is an invertible square matrix) 
+9 
+ 
+10 makeCacheMatrix <- function(x = matrix()) { 
+11    
+12   inv <- NULL 
+13   set <- function(y) { 
+14     x <<- y 
+15     inv <<- NULL 
+16   } 
+17   get <- function() x 
+18   setinv <- function(inverse) inv <<- inverse 
+19   getinv <- function() inv 
+20   list(set = set, get = get, setinv = setinv, getinv = getinv) 
+21 } 
+22 
+ 
+23 
+ 
+24 ## Write a short comment describing this function 
+25 ## cacheSolve is a function which computes the inverse of the special "matrix"  
+26 ## returned by makeCacheMatrix above. If the inverse has already been calculated  
+27 ## (and the matrix has not changed), then the cachesolve should retrieve the  
+28 ## inverse from the cache 
+29 
+ 
+30 cacheSolve <- function(x, ...) { 
+31   ## Return a matrix that is the inverse of 'x' 
+32   inv <- x$getinv() 
+33   if(!is.null(inv)) { 
+34     message("getting cached result") 
+35     return(inv) 
+36   } 
+37   data <- x$get() 
+38   inv <- solve(data, ...) 
+39   x$setinv(inv) 
+40   inv 
+41 } 
+42 ## ---------------Checking the program------------------------ 
+43 ## m <- matrix(rnorm(16),4,4) 
+44 ## m1 <- makeCacheMatrix(m) 
+45 ## cacheSolve(m1) 
+46 #[,1]        [,2]       [,3]       [,4] 
+47 #[1,]  0.80687874 -0.13931355  0.5289689 -0.4949543 
+48 #[2,] -0.81938514 -0.27007020 -0.4668413 -0.3060374 
+49 ##[3,]  0.07044642  0.30140684 -0.3405699 -0.0146283 
+50 #[4,] -1.27727660  0.04738224 -0.2965086 -0.7156750
